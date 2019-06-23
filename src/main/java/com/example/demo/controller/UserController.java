@@ -5,6 +5,7 @@ import com.example.demo.serivce.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -43,6 +44,7 @@ public class UserController {
     }
 
     @PostMapping("signUp")
+    @ResponseBody
     public Map<String, Object> signUp(String loginName, String password, String realName) {
         Map<String, Object> result = new HashMap<>(0);
         if (null != loginName && null != password && null != realName) {
@@ -50,7 +52,7 @@ public class UserController {
             userBean = userService.save(userBean);
             if (null != userBean.getId()) {
                 result.put("retCode", "000");
-                result.put("userProfile", userBean);
+                result.put("userProfile", userBean.toString());
                 result.put("msg", "注册成功");
             } else {
                 result.put("retCode", "001");

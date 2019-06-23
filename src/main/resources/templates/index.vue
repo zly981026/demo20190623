@@ -21,12 +21,12 @@
                 <form id="loginForm" @submit.prevent="login">
                     <div class="form-group">
                         <label for="loginName">用户名</label>
-                        <input class="form-control" type="text" required id="loginName" v-model="user.loginName"
+                        <input class="form-control" type="text" required id="loginName" v-model="loginName"
                                name="loginName">
                     </div>
                     <div class="form-group">
                         <label for="password">密码</label>
-                        <input class="form-control" type="password" required id="password" v-model="user.password"
+                        <input class="form-control" type="password" required id="password" v-model="password"
                                name="password">
                     </div>
                     <div class="form-group">
@@ -57,10 +57,10 @@
         },
         methods: {
             login() {
+                var self =this;
                 $.ajax({
                     method: "post",
                     url: "/userService/signIn",
-                    contentType: "application/json",
                     dataType: "json",
                     data: {
                         loginName: self.loginName,

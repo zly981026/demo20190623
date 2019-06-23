@@ -72,7 +72,6 @@
                     $.ajax({
                         method: "post",
                         url: "/userService/signUp",
-                        contentType: "application/json",
                         dataType: "json",
                         async: true,
                         data: {
@@ -83,6 +82,7 @@
                         success(json) {
                             if (json["retCode"] === "000") {
                                 alert(json["msg"] + "--------->" + json["userProfile"]);
+                                window.location.href = "/";
                             } else {
 
                                 alert(json["msg"] + "--------->" + json["retCode"]);
