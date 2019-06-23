@@ -58,20 +58,27 @@
         methods: {
             login() {
                 $.ajax({
-                    method:"post",
-                    url:"/userService/signIn",
-                    contentType:"application/json",
-                    dataType:"json",
-                    async:true,
-                    success(json){
-                        if(json["retCode"]==="000"){
+                    method: "post",
+                    url: "/userService/signIn",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: {
+                        loginName: self.loginName,
+                        password: self.password
+                    },
+                    async: true,
+                    success(json) {
+                        if (json["retCode"] === "000") {
+                            alert(json["msg"] + "--------->" + json["userProfile"]);
+                        } else {
 
+                            alert(json["msg"] + "--------->" + json["retCode"]);
                         }
                     },
-                    error(){
-
+                    error() {
+                        alert("未知错误");
                     }
-                })
+                });
             }
         }
     });

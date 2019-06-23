@@ -18,25 +18,29 @@
                 <h3 class="card-title">
                     完善注册信息
                 </h3>
-                <form>
+                <form id="registrationForm" @submit.prevent="signUp">
                     <div class="form-group">
                         <label for="realName">真实姓名</label>
-                        <input class="form-control" type="text" required id="realName" name="realName">
+                        <input class="form-control" type="text" required id="realName" name="realName"
+                               v-model="realName">
                     </div>
                     <div class="form-group">
                         <label for="loginName">用户名</label>
-                        <input class="form-control" type="text" required id="loginName" name="loginName">
+                        <input class="form-control" type="text" required id="loginName" name="loginName"
+                               v-model="loginName">
                     </div>
                     <div class="form-group">
                         <label for="password">密码</label>
-                        <input class="form-control" type="password" required id="password" name="password">
+                        <input class="form-control" type="password" required id="password" name="password"
+                               v-model="password">
                     </div>
                     <div class="form-group">
                         <label for="confirmPassword">确认密码</label>
-                        <input class="form-control" type="password" required id="confirmPassword">
+                        <input class="form-control" type="password" required id="confirmPassword"
+                               v-model="confirmPassword">
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-link">提交</button>
+                        <button class="btn btn-link" type="submit">提交</button>
                     </div>
                 </form>
             </div>
@@ -55,8 +59,44 @@
 <script type="module">
     var vm = new Vue({
         el: "#App",
-        data: {},
-        methods: {}
+        data: {
+            realName: "",
+            loginName: "",
+            password: "",
+            confirmPassword: ""
+        },
+        methods: {
+            signUp() {
+                var self = this;
+                if (this.password == this.confirmPassword) {
+                    $.ajax({
+                        method: "post",
+                        url: "/userService/signUp",
+                        contentType: "application/json",
+                        dataType: "json",
+                        async: true,
+                        data: {
+                            realName: self.realName,
+                            loginName: self.loginName,
+                            password: self.password
+                        },
+                        success(json) {
+                            if (json["retCode"] === "000") {
+                                alert(json["msg"] + "--------->" + json["userProfile"]);
+                            } else {
+
+                                alert(json["msg"] + "--------->" + json["retCode"]);
+                            }
+                        },
+                        error() {
+                            alert("未知错误");
+                        }
+                    });
+                } else {
+                    alert("密码不一致");
+                }
+            }
+        }
     });
 </script>
 </html>

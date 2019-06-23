@@ -28,7 +28,7 @@ public class UserController {
             UserBean userBean = userService.findByLoginName(loginName);
             if (null != userBean && password.equals(userBean.getPassword())) {
                 result.put("retCode", "000");
-                result.put("userProfile", userBean);
+                result.put("userProfile", userBean.toString());
                 result.put("msg", "登陆成功");
             } else {
                 result.put("retCode", "001");
